@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="single-contact">
+        <h1 class="single-contact-name">
+            {{contact.first_name}} {{contact.last_name}}
+        </h1>
+        <p><b>E-MAIL: </b>{{contact.email}}</p>
+        <p><b>Telefone: </b>{{contact.phone}}</p>
+        <p><b>Data de criação: </b>{{contact.created_date}}</p>
+        <p><b>Descrição: </b>{{contact.description}}</p>
+        {% if loans %}
+        <p><b>Empréstimos:</b></p>
+        <ul>
+            {% for loan in loans %}
+                <li>{{ loan.owner }} - {{ loan.total_amount }}</li>
+                
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p><b>Nenhum empréstimo encontrado para este contato.</b></p>
+    {% endif %}
+    </div>
+{% endblock content %}

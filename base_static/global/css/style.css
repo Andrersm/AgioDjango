@@ -51,6 +51,7 @@ svg {
 }
 .header {
   background: var(--clr-black);
+  background-color: #56b84d;
   padding: var(--spacing);
   box-shadow: 0 5px 10px 2px var(--clr-dark-shadow-20);
   z-index: 1;
@@ -59,11 +60,13 @@ svg {
 .header-heading {
   font-size: var(--biggest-font-size);
   text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
 }
 .header-link {
-  color: var(--link-light-color);
+  color: #151515;
   text-decoration: none;
   transition: filter var(--transition-fast) ease-in-out;
+  font-family: Helvetica, Arial, sans-serif;
 }
 .header-link:hover {
   filter: brightness(70%);
@@ -72,18 +75,40 @@ svg {
   margin: var(--spacing);
 }
 .menu-list {
+  font-size: bold;
   list-style: none;
   display: flex;
   justify-content: center;
-  flex-flow: row wrap;
+  flex-flow:wrap-reverse
+}
+
+.menu-item {
+  font-size: bold;
+  font: fantasy;
+  padding: var(--spacing);
+  color: #252525;
+  text-decoration: none;
+  transition: background-color var(--transition-fast) ease-in-out;
+  
+}
+.menu-header {
+  font-size: bold;
+  font: fantasy;
+  padding: var(--spacing);
+  color: #252525;
+  text-decoration: none;
+  transition: background-color var(--transition-fast) ease-in-out;
+
+
 }
 .menu-link {
   display: block;
+  font-size: bold;
+  font: fantasy;
   padding: var(--spacing);
-  color: var(--link-light-color);
+  color: #252525;
   text-decoration: none;
   transition: background-color var(--transition-fast) ease-in-out;
-  border-radius: var(--default-border-radius);
 }
 .menu-link:hover {
   background: var(--clr-light-shadow-10);
@@ -191,7 +216,7 @@ svg {
   font-size: var(--smaller-font-size);
 }
 .message.success {
-  background: rgba(0, 255, 0, 0.3);
+  background: #56b84d;
   border: 1px solid rgba(0, 255, 0, 90%);
 }
 .message.error {
@@ -248,7 +273,7 @@ svg {
   font-size: var(--smaller-font-size);
 }
 .btn {
-  background-color: var(--link-dark-color);
+  background-color: #252525;
   color: var(--clr-white);
   font-weight: bold;
   border: none;
@@ -294,20 +319,26 @@ svg {
 
 .menu-links {
   text-align: right; 
-  background-color: #56b84d;
-  height: 30px;
+  background-color: #151515;
+
 }
 
 .menu-links ul {
   list-style: none;
+  padding: 0.1;
 }
 
 .menu-links ul li {
   display: inline-block;
-  margin: 0 10px; 
+  margin: 0 8px; 
+  font-size: 15px;
+  padding: 0.1px;
+  font: fantasy;
+  font-weight: bold;
 }
 
 .menu-links ul li a {
   color: #fff; 
   text-decoration: none;
+  
 }

@@ -1,8 +1,10 @@
 <nav class="menu-links">
+    {% if user.is_authenticated %}
     <ul>
       <li><a href="{% url 'contact:user_update' %}" class="menu-link">Perfil</a></li>
       <li><a href="{% url 'contact:logout' %}" class="menu-link">Logout</a></li>
     </ul>
+    {% endif %}
 </nav>
 <header class="header">
     <h1 class="header-heading">
@@ -14,17 +16,17 @@
     <ul class="menu-list">
         {% if user.is_authenticated %}
         <li class="menu-item">
-            <a href="{% url 'contact:create' %}" class="menu-link">Criar contato</a>
+            <a href="{% url 'contact:create' %}" class="menu-header">Criar contato</a>
         </li>
         <li class="menu-item">
-            <a href="{% url 'contact:create_loan' %}" class="menu-link">Criar empréstimo</a>
+            <a href="{% url 'contact:create_loan' %}" class="menu-header">Criar empréstimo</a>
         </li>
         {% else %}
         <li class="menu-item">
-            <a href="{% url 'contact:login' %}" class="menu-link">Login</a>
+            <a href="{% url 'contact:login' %}" class="menu-header">Login</a>
         </li>
         <li class="menu-item">
-            <a href="{% url 'contact:register' %}" class="menu-link">Registrar</a>
+            <a href="{% url 'contact:register' %}" class="menu-header">Registrar</a>
         </li>
        {% endif %}
         

@@ -4,6 +4,9 @@ from . import models
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
+from contact.models import Contact
+
+
 
 
 class ContactForm(forms.ModelForm):
@@ -189,7 +192,11 @@ class RegisterUpdateForm(forms.ModelForm):
     
 
 class LoanForm(forms.ModelForm):
- 
+
+    def __init__(self, user, *args, **kwargs):
+        super(LoanForm, self).__init__(*args, **kwargs)
+        self.fields['owner'].queryset = models.Contact.objects.filter(owner=user)
+
     class Meta:
         model = models.Loan
         fields = ('total_amount', 'total_installments', 'owner',)

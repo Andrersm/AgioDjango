@@ -80,8 +80,7 @@ def delete(request, contact_id):
     confirmation = request.POST.get('confirmation', 'no')
 
     if confirmation == 'yes':
-        contact.show = False
-        contact.save()
+        contact.delete()
         messages.success(request, 'Contato excluído com sucesso!')
         return redirect('contact:index')
 
@@ -99,14 +98,14 @@ def loancreate(request):
     form_action = reverse('contact:create_loan')
 
     if request.method == 'POST':
-        form = LoanForm(request.POST, request.FILES)
+        form = LoanForm(request.user, request.POST, request.FILES)  
         if form.is_valid():
             loan = form.save(commit=False)
             loan.save()
             messages.success(request, 'Empréstimo criado com sucesso!')
             return redirect('contact:index')
     else:
-        form = LoanForm()
+        form = LoanForm(user=request.user) 
 
     context = {
         'form': form,

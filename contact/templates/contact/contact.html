@@ -4,16 +4,18 @@
     <h1 class="single-contact-name">
       {{ contact.first_name }} {{ contact.last_name }}
     </h1>
+    {% if contact.picture  %}
     <div class="image-frame">
       <img src="{{ contact.picture.url }}" alt="{{ contact.first_name }}" width="100">
     </div>
+    {% endif %}
     <p><b>ID:</b> {{ contact.id }}</p>
     <p><b>E-mail:</b> {{ contact.email }}</p>
     <p><b>Telefone:</b> {{ contact.phone }}</p>
     <p><b>Data de criação:</b> {{ contact.created_date }}</p>
     <p><b>Descrição:</b> {{ contact.description }}</p>
-    {% if contact.picture  %}
-    {% endif %}
+    
+    
     {% if loans %}
         <p><b>Empréstimos:</b></p>
             <ul>

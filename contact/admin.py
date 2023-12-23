@@ -12,7 +12,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Loan)
 class LoanAdmin(admin.ModelAdmin):
-    list_display = 'owner', 'total_amount', 'loan_date',
+    list_display = 'id','owner', 'total_amount', 'loan_date',
     ordering = 'id',
     list_display_links = 'owner',
     

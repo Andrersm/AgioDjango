@@ -23,6 +23,9 @@ urlpatterns = [
     path('user/update/', views.user_update, name='user_update'),
     
     path('loan/make/', views.loancreate, name='create_loan'),
+    path('loan/<int:loan_id>/detail/', views.loan, name='loan'),
+    path('loan/<int:loan_id>/update/', views.update, name='update_loan'),
+    path('loan/<int:loan_id>/delete/', views.delete, name='delete_loan'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

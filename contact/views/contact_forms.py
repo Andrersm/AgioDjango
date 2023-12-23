@@ -94,7 +94,7 @@ def delete(request, contact_id):
     )
 
 @login_required(login_url='contact:login')
-def loancreate(request):
+def loancreate(request,):
     form_action = reverse('contact:create_loan')
 
     if request.method == 'POST':
@@ -113,3 +113,33 @@ def loancreate(request):
     }
 
     return render(request, 'contact/create_loan.html', context)
+
+def loan_update(request, loan_id):
+    loan = get_object_or_404(Loan, pk=loan_id, show=True)
+    form_action = reverse('contact:loan_update', args=(loan_id,))
+
+    if request.method == 'POST':
+        form = LoanForm(request.user, request.POST, request.FILES, instance=loan)
+        if form.is_valid():
+            loan = form.save(commit=False)
+            loan.save()
+            messages.success(request, 'Empréstimo atualizado com sucesso!')
+            return redirect('contact:index')
+    else:
+        form = LoanForm(user=request.user, instance=loan)
+
+    context = {
+        'form': form,
+        'form_action': form_action,
+    }
+
+    return render(request, 'contact/create_loan.html', context)
+
+
+def loan(request, loan_id):
+
+    single_loan = get_object_or_404(Loan, pk=loan_id,)
+    context = {
+        'loan': single_loan,
+        }
+    return render(request, 'contact/loan.html', context)

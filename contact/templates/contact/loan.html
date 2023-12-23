@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="single-loan">
+    <h1 class="single-loan">
+      {{ loan.owner }} {{ loan.total_amount }}
+    </h1>
+    
+    <p><b>Valor:</b> {{ loan.total_amount }}</p>
+    <p><b>Total de parcelas:</b> {{ loan.total_installments}}</p>
+    <p><b>Data de criação:</b> {{ loan.loan_date }}</p>
+    
+    
+    </div>
+  </div>
+{% endblock content %}

@@ -40,6 +40,6 @@ class Loan(models.Model):
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     loan_date = models.DateField(default=timezone.now)
     total_installments = models.IntegerField()
-    owner = models.ForeignKey(Contact, on_delete=models.DO_NOTHING)
+    owner = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True)
     def __str__(self) -> str:
         return f'{self.owner}'

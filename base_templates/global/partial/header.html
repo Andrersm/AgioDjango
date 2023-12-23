@@ -1,0 +1,45 @@
+<nav class="menu-links">
+    <ul>
+      <li><a href="{% url 'contact:user_update' %}" class="menu-link">Perfil</a></li>
+      <li><a href="{% url 'contact:logout' %}" class="menu-link">Logout</a></li>
+    </ul>
+</nav>
+<header class="header">
+    <h1 class="header-heading">
+        <a href="{% url 'contact:index' %}" class="header-link">
+        AGIO
+        </a>    
+    </h1>
+<nav class="menu">
+    <ul class="menu-list">
+        {% if user.is_authenticated %}
+        <li class="menu-item">
+            <a href="{% url 'contact:create' %}" class="menu-link">Criar contato</a>
+        </li>
+        <li class="menu-item">
+            <a href="{% url 'contact:create_loan' %}" class="menu-link">Criar empréstimo</a>
+        </li>
+        {% else %}
+        <li class="menu-item">
+            <a href="{% url 'contact:login' %}" class="menu-link">Login</a>
+        </li>
+        <li class="menu-item">
+            <a href="{% url 'contact:register' %}" class="menu-link">Registrar</a>
+        </li>
+       {% endif %}
+        
+       
+    </ul>
+</nav>
+{% if user.is_authenticated %}
+    {% if request.resolver_match.url_name == 'index'%}
+        <div class="search">
+            <form action="{% url 'contact:search' %}" method="get">
+                <input type="text" class="search-input" placeholder="search"
+                id="search" name="q" value="{{ search_value }}">
+            </form>
+    {% endif %}
+{% endif %}
+    
+    </div>
+</header>

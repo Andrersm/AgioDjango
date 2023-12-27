@@ -2,9 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from contact.models import Contact, Loan, Parcelas
 import re
+from django.contrib import messages
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from contact.filters  import ParcelasFilter
+from django.http import HttpResponseRedirect
+
 
 
 def replace_all(text: str):
@@ -68,7 +72,6 @@ def search(request):
 
 @login_required(login_url='contact:login')
 def parcelas(request,):
-    filtro = ParcelasFilter(request.GET, queryset=Parcelas.objects.all())
     user = request.user
     single_installments = Parcelas.objects.filter(owner_user=user).order_by('id')
 
@@ -79,7 +82,36 @@ def parcelas(request,):
     context = {
         'page_obj': page_obj,
         'site_title': 'parcelas - ',
-        'filter': filtro,
     }
     return render(request, 'contact/allLoans.html', context,)  
 
+@login_required(login_url='contact:login')
+def parcelas_filter(request,):
+    
+    user = request.user
+    single_installments = Parcelas.objects.filter(owner_user=user).order_by('owner')
+    filter = ParcelasFilter(request.GET, queryset=single_installments)
+
+    paginator = Paginator(single_installments, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    total_value = 0  
+
+    for installment in filter.qs:
+        if installment.owner_user == request.user:
+            total_value += installment.amount_per_installment
+    
+    context = {
+        'page_obj': page_obj,
+        'site_title': 'parcelas/filter - ',
+        'filter': filter,
+        'total_value': total_value,
+        
+    }
+    return render(request, 'contact/allinstall.html', context,)  
+
+def delete_parcela(request, parcela_id):
+    parcela = get_object_or_404(Parcelas, pk=parcela_id,)
+    parcela.delete()
+    messages.success(request, 'Parcela paga com sucesso!')
+    return redirect('contact:parcelas_filter')  

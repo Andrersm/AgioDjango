@@ -64,6 +64,7 @@ svg {
 }
 .header-link {
   color: #151515;
+  font-style: oblique;
   text-decoration: none;
   transition: filter var(--transition-fast) ease-in-out;
   font-family: Helvetica, Arial, sans-serif;
@@ -82,12 +83,13 @@ svg {
   flex-flow:wrap-reverse
 }
 
+
 .menu-item {
   font-size: bold;
-  font: fantasy;
-  padding: var(--spacing);
+  font-style: oblique;
+  padding: var;
   color: #252525;
-  text-decoration: none;
+  text-decoration:dashed;
   transition: background-color var(--transition-fast) ease-in-out;
   
 }
@@ -104,6 +106,7 @@ svg {
 .menu-link {
   display: block;
   font-size: bold;
+  font-style: oblique;
   font: fantasy;
   padding: var(--spacing);
   color: #252525;
@@ -271,6 +274,17 @@ svg {
 }
 .form-group label {
   font-size: var(--smaller-font-size);
+}
+
+.btn-pagamento {
+  background-color: #3CB371; /* Cor verde */
+  color: var(--clr-white);
+  font-weight: bold;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: var(--default-border-radius);
+  cursor: pointer;
+  transition: filter var(--transition-fast) ease-in-out;
 }
 .btn {
   background-color: #252525;

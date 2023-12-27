@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+
   <div class="form-wrapper">
-    <h2>Emprestimo</h2>
+    <h2>Empréstimo</h2>
     
     <form 
       action="{{ form_action }}"
@@ -21,11 +22,6 @@
               <p class="help-text">{{ field.help_text }}</p>
             {% endif %}
           </div>
-          {% if field.name == 'picture' and field.value.url %}
-          <div class="form-group">
-                <p><img src=" {{field.value.url }}" alt=""></p>
-            </div>
-            {% endif %}
         {% endfor %}
       </div>
       {% if form.non_field_errors %}
@@ -36,7 +32,7 @@
             </div>
           </div>
         </div>
-      {% endif %}
+      {% endif %}--
       <div class="form-content">
         <div class="form-group">
           <button class="btn" type="submit">Send</button>

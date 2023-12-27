@@ -21,6 +21,9 @@
         <li class="menu-item">
             <a href="{% url 'contact:create_loan' %}" class="menu-header">Criar empréstimo</a>
         </li>
+        <li class="menu-item">
+            <a href="{% url 'contact:parcelas' %}" class="menu-header">Parcelas</a>
+        </li>
         {% else %}
         <li class="menu-item">
             <a href="{% url 'contact:login' %}" class="menu-header">Login</a>
@@ -37,7 +40,7 @@
     {% if request.resolver_match.url_name == 'index'%}
         <div class="search">
             <form action="{% url 'contact:search' %}" method="get">
-                <input type="text" class="search-input" placeholder="search"
+                <input type="text" class="search-input" placeholder="Procurar"
                 id="search" name="q" value="{{ search_value }}">
             </form>
     {% endif %}

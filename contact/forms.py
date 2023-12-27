@@ -196,7 +196,7 @@ class LoanForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(LoanForm, self).__init__(*args, **kwargs)
         self.fields['owner'].queryset = models.Contact.objects.filter(owner=user)
-
     class Meta:
         model = models.Loan
         fields = ('total_amount', 'total_installments', 'owner', 'fees', 'days')
+        widgets = {'owner': forms.Select(attrs={'class':'form-control'})}

@@ -1,42 +1,49 @@
-<html>
-<head>
-    <title>Filtrar Parcelas</title>
-</head>
-<body>
-    <h1>Filtrar Parcelas</h1>
-    <form method="get" action="{% url 'allloans.html' %}">
-        <label for="id_campo_de_filtro_0">Data da Parcela (De):</label>
-        {{ filter.form.campo_de_filtro_0 }}
-        <label for="id_campo_de_filtro_1">Data da Parcela (Até):</label>
-        {{ filter.form.campo_de_filtro_1 }}
-        <button type="submit">Filtrar</button>
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="GET">
+        {{ filter.form.as_p }}
+        <button class="btn" type="submit">Filtrar</button>
     </form>
-    <hr>
-    <!-- Lista de parcelas filtradas -->
-    <h2>Parcelas Filtradas</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Valor por Parcela</th>
-                <th>Pago</th>
-                <th>Dono do Empréstimo</th>
-                <th>Usuário</th>
-                <th>Data da Parcela</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for parcela in filter.qs %}
-            <tr>
-                <td>{{ parcela.id }}</td>
-                <td>{{ parcela.amount_per_installment }}</td>
-                <td>{% if parcela.paid %} Pago {% else %} Pendente {% endif %}</td>
-                <td>{{ parcela.owner }}</td>
-                <td>{{ parcela.owner_user }}</td>
-                <td>{{ parcela.installment_date }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+
+    {% if filter.qs %}
+        <div class="responsive-table">
+            <table class="contacts-table">
+                <caption class="table-caption">Parcelas</caption>
+                <thead>
+                    <tr class="table-row table-row-header">
+                        <th class="table-header">Dono</th>
+                        <th class="table-header">Valor da parcela</th>
+                        <th class="table-header">Data da parcela</th>
+                        <th class="table-header">Pagamento</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for installment in filter.qs %}
+                        {% if installment.owner_user == user %}
+                            <tr class="table-row">
+                                <td class="table-cel">
+                                    {{installment.owner}}
+                                </td>
+                                <td class="table-cel">  
+                                    {{installment.amount_per_installment}}
+                                </td>
+                                <td class="table-cel">  
+                                    {{installment.installment_date}}
+                                </td>
+                                <td class="table-cel">
+                                    <form action="{% url 'contact:delete_parcela' parcela_id=installment.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="btn" type="submit">Pagar</button>
+                                    </form>                                    
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p>Valor total: {{ total_value }}</p>
+    {% endif %}
+{% endblock content %}

@@ -27,7 +27,9 @@ urlpatterns = [
     path('loan/<int:loan_id>/update/', views.update, name='update_loan'),
     path('loan/<int:loan_id>/delete/', views.delete, name='delete_loan'),
 
-    path('parcelas/', views.parcelas, name='delete_loan'),
+    path('parcelas/', views.parcelas_filter, name='parcelas'),
+    path('parcelas/filter', views.parcelas_filter, name='parcelas_filter'),
+    path('parcelas/<int:parcela_id>/delete/', views.delete_parcela, name='delete_parcela'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

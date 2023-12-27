@@ -2,7 +2,7 @@ import django_filters
 from contact.models import Parcelas
 
 class ParcelasFilter(django_filters.FilterSet):
-    campo_de_filtro = django_filters.DateFromToRangeFilter()
+    intervalo_de_datas = django_filters.DateFromToRangeFilter(field_name='installment_date', label='Intervalo de datas')
     class Meta:
         model = Parcelas
-        fields = ['installment_date']
+        fields = ['intervalo_de_datas',]

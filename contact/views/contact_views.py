@@ -83,7 +83,7 @@ def parcelas(request,):
         'page_obj': page_obj,
         'site_title': 'parcelas - ',
     }
-    return render(request, 'contact/allLoans.html', context,)  
+    return render(request, 'contact/allinstall.html', context,)  
 
 @login_required(login_url='contact:login')
 def parcelas_filter(request,):

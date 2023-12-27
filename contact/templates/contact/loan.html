@@ -8,8 +8,21 @@
     <p><b>Valor:</b> {{ loan.total_amount }}</p>
     <p><b>Total de parcelas:</b> {{ loan.total_installments}}</p>
     <p><b>Data de criação:</b> {{ loan.loan_date }}</p>
-    
-    
+
+    <p><b>-----------------------------------------------</b></p>
+    {% for parcela in installments %}
+    <p><b>Valor:</b> {{ parcela.amount_per_installment }}</p>
+    <p><b>Data da parcela:</b> {{ parcela.installment_date }}</p>
+    {% if parcela.paid  %}
+      <p><b>Pagamento:</b>Pago</p>
+    {% else %}
+      <p><b>Pagamento:</b> Pendente</p> 
+    {% endif %}
+    <p><b>------------------</b></p>
+
+
+
+    {% endfor %}
     </div>
   </div>
 {% endblock content %}

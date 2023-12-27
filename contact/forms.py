@@ -199,4 +199,4 @@ class LoanForm(forms.ModelForm):
 
     class Meta:
         model = models.Loan
-        fields = ('total_amount', 'total_installments', 'owner',)
+        fields = ('total_amount', 'total_installments', 'owner', 'fees', 'days')

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from contact.forms import ContactForm, LoanForm
 from django.urls import reverse
-from contact.models import Contact, Loan
+from contact.models import Contact, Loan, Parcelas
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from datetime import timedelta
+
 
 @login_required(login_url='contact:login')
 def create(request):
@@ -98,10 +100,29 @@ def loancreate(request,):
     form_action = reverse('contact:create_loan')
 
     if request.method == 'POST':
-        form = LoanForm(request.user, request.POST, request.FILES)  
+        form = LoanForm(request.user, request.POST, request.FILES)
+        
         if form.is_valid():
             loan = form.save(commit=False)
+            loan.total_amount_ = (loan.fees / 100) * loan.total_amount 
+            loan.total_amount = loan.total_amount_ + loan.total_amount
             loan.save()
+            days = loan.days
+            for i in range(loan.total_installments):
+                parcelas = Parcelas()
+                parcelas.installment_date = loan.loan_date + timedelta(days=days)
+                parcelas.amount = loan.total_installments
+                parcelas.amount_per_installment = loan.total_amount / loan.total_installments
+                parcelas.owner = loan
+                days += loan.days
+                parcelas.owner_user = request.user
+                parcelas.save()
+                i += 1
+            
+            
+                
+            
+            
             messages.success(request, 'Empréstimo criado com sucesso!')
             return redirect('contact:index')
     else:
@@ -139,7 +160,10 @@ def loan_update(request, loan_id):
 def loan(request, loan_id):
 
     single_loan = get_object_or_404(Loan, pk=loan_id,)
+    single_installments = Parcelas.objects.filter(owner=single_loan)
     context = {
         'loan': single_loan,
+        'installments': single_installments,
         }
     return render(request, 'contact/loan.html', context)
+

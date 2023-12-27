@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from contact.models import Contact, Loan
+from contact.models import Contact, Loan, Parcelas
 import re
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from contact.filters  import ParcelasFilter
 
 
 def replace_all(text: str):
@@ -63,3 +64,22 @@ def search(request):
         'search_value': search_value,
         }
     return render(request, 'contact/index.html', context)
+
+
+@login_required(login_url='contact:login')
+def parcelas(request,):
+    filtro = ParcelasFilter(request.GET, queryset=Parcelas.objects.all())
+    user = request.user
+    single_installments = Parcelas.objects.filter(owner_user=user).order_by('id')
+
+    paginator = Paginator(single_installments, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'site_title': 'parcelas - ',
+        'filter': filtro,
+    }
+    return render(request, 'contact/allLoans.html', context,)  
+

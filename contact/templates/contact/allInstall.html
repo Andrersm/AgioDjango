@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Filtrar Parcelas</title>
+</head>
+<body>
+    <h1>Filtrar Parcelas</h1>
+    <form method="get" action="{% url 'allloans.html' %}">
+        <label for="id_campo_de_filtro_0">Data da Parcela (De):</label>
+        {{ filter.form.campo_de_filtro_0 }}
+        <label for="id_campo_de_filtro_1">Data da Parcela (Até):</label>
+        {{ filter.form.campo_de_filtro_1 }}
+        <button type="submit">Filtrar</button>
+    </form>
+    <hr>
+    <!-- Lista de parcelas filtradas -->
+    <h2>Parcelas Filtradas</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Valor por Parcela</th>
+                <th>Pago</th>
+                <th>Dono do Empréstimo</th>
+                <th>Usuário</th>
+                <th>Data da Parcela</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parcela in filter.qs %}
+            <tr>
+                <td>{{ parcela.id }}</td>
+                <td>{{ parcela.amount_per_installment }}</td>
+                <td>{% if parcela.paid %} Pago {% else %} Pendente {% endif %}</td>
+                <td>{{ parcela.owner }}</td>
+                <td>{{ parcela.owner_user }}</td>
+                <td>{{ parcela.installment_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

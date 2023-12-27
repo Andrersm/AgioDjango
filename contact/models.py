@@ -2,13 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-# id (primary key - automático)
-# first_name (string), last_name (string), phone (string)
-# email (email), created_date (date), description (text)
 
-# Depois
-# category (foreign key), show (boolean), owner (foreign key)
-# picture (imagem)
+
+
 
 
 class Contact(models.Model):
@@ -41,5 +37,22 @@ class Loan(models.Model):
     loan_date = models.DateField(default=timezone.now)
     total_installments = models.IntegerField()
     owner = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True)
+    fees = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    days = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.owner}'
+
+   
+class Parcelas(models.Model):
+    class Meta:
+        verbose_name_plural = 'Parcelas'
+        verbose_name = 'Parcela'
+    amount_per_installment = models.DecimalField(max_digits=10,
+                            decimal_places=2, null=True)
+    paid = models.BooleanField(default=False)
+    owner = models.ForeignKey(Loan, on_delete=models.SET_NULL, null=True)
+    owner_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    installment_date = models.DateField(default=timezone.now)
     def __str__(self) -> str:
         return f'{self.owner}'

@@ -94,7 +94,7 @@ def parcelas_filter(request,):
         'total_value': total_value,
         
     }
-    return render(request, 'contact/allinstall.html', context,)  
+    return render(request, 'contact/allparcelas.html', context,)  
 
 def delete_parcela(request, parcela_id):
     parcela = get_object_or_404(Parcelas, pk=parcela_id,)

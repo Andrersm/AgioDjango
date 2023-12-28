@@ -70,20 +70,6 @@ def search(request):
     return render(request, 'contact/index.html', context)
 
 
-@login_required(login_url='contact:login')
-def parcelas(request,):
-    user = request.user
-    single_installments = Parcelas.objects.filter(owner_user=user).order_by('id')
-
-    paginator = Paginator(single_installments, 10)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        'page_obj': page_obj,
-        'site_title': 'parcelas - ',
-    }
-    return render(request, 'contact/allinstall.html', context,)  
 
 @login_required(login_url='contact:login')
 def parcelas_filter(request,):
@@ -114,4 +100,4 @@ def delete_parcela(request, parcela_id):
     parcela = get_object_or_404(Parcelas, pk=parcela_id,)
     parcela.delete()
     messages.success(request, 'Parcela paga com sucesso!')
-    return redirect('contact:parcelas_filter')  
+    return redirect('contact:parcelas')  

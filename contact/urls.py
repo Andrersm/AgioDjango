@@ -28,7 +28,6 @@ urlpatterns = [
     path('loan/<int:loan_id>/delete/', views.delete, name='delete_loan'),
 
     path('parcelas/', views.parcelas_filter, name='parcelas'),
-    path('parcelas/filter', views.parcelas_filter, name='parcelas_filter'),
     path('parcelas/<int:parcela_id>/delete/', views.delete_parcela, name='delete_parcela'),
 ]
 

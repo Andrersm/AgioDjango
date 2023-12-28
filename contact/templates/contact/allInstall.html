@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form method="GET">
-        {{ filter.form.as_p }}
-        <button class="btn" type="submit">Filtrar</button>
-    </form>
-
+  
     {% if filter.qs %}
         <div class="responsive-table">
             <table class="contacts-table">

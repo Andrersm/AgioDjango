@@ -31,7 +31,7 @@ class Contact(models.Model):
 
 class Loan(models.Model):
     class Meta:
-        verbose_name_plural = 'Emprstimos'
+        verbose_name_plural = 'Emprestimos'
         verbose_name = 'Emprestimo'
     total_amount = models.DecimalField(max_digits=10, decimal_places=2,
                                        verbose_name='Valor')
@@ -52,9 +52,9 @@ class Parcelas(models.Model):
         verbose_name_plural = 'Parcelas'
         verbose_name = 'Parcela'
     amount_per_installment = models.DecimalField(max_digits=10,
-                            decimal_places=2, null=True)
+                            decimal_places=2, null=True, verbose_name='Valor por parcela')
     paid = models.BooleanField(default=False,)
-    owner = models.ForeignKey(Loan, on_delete=models.SET_NULL, null=True)
+    owner = models.ForeignKey(Loan, on_delete=models.SET_NULL, null=True, verbose_name='Dono do emprestimo')
     owner_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     installment_date = models.DateField(default=timezone.now)
     def __str__(self) -> str:

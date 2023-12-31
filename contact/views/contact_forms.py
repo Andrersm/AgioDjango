@@ -101,7 +101,6 @@ def loancreate(request,):
 
     if request.method == 'POST':
         form = LoanForm(request.user, request.POST, request.FILES)
-        
         if form.is_valid():
             loan = form.save(commit=False)
             loan.total_amount_ = (loan.fees / 100) * loan.total_amount 
@@ -118,7 +117,7 @@ def loancreate(request,):
                 parcelas.owner_user = request.user
                 parcelas.save()
                 i += 1
-            
+        
             
                 
             

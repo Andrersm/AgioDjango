@@ -224,5 +224,5 @@ class LoanForm(forms.ModelForm):
         self.fields['owner'].queryset = models.Contact.objects.filter(owner=user)
     class Meta:
         model = models.Loan
-        fields = ('total_amount', 'total_installments', 'owner', 'fees', 'days')
+        fields = ('total_amount', 'total_installments', 'owner', 'fees', 'days', 'loan_date')
         widgets = {'owner': forms.Select(attrs={'class':'form-control'})}

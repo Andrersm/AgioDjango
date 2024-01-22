@@ -35,7 +35,7 @@ class Loan(models.Model):
         verbose_name = 'Emprestimo'
     total_amount = models.DecimalField(max_digits=10, decimal_places=2,
                                        verbose_name='Valor')
-    loan_date = models.DateField(default=timezone.now)
+    loan_date = models.DateField(default=timezone.now, verbose_name='Data de Emprestimo')
     total_installments = models.IntegerField(verbose_name='Parcelas')
     owner = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True,
                               verbose_name='Dono do emprestimo')

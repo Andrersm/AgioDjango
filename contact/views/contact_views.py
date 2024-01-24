@@ -18,7 +18,7 @@ def replace_all(text: str):
 @login_required(login_url='contact:login')
 def index(request):
     user = request.user
-    contacts = Contact.objects.filter(owner=user, show=True).order_by('id')
+    contacts = Contact.objects.filter(owner=user, show=True).order_by('first_name')
 
     paginator = Paginator(contacts, 10)
     page_number = request.GET.get("page")
@@ -78,7 +78,7 @@ def parcelas_filter(request,):
     single_installments = Parcelas.objects.filter(owner_user=user).order_by('installment_date')
     filter = ParcelasFilter(request.GET, queryset=single_installments)
 
-    paginator = Paginator(single_installments, 5)
+    paginator = Paginator(single_installments, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     total_value = 0  

@@ -6,3 +6,4 @@ class ParcelasFilter(django_filters.FilterSet):
     class Meta:
         model = Parcelas
         fields = ['intervalo_de_datas',]
+    

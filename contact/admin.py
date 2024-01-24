@@ -19,7 +19,7 @@ class LoanAdmin(admin.ModelAdmin):
 @admin.register(Parcelas)
 class ParcelasAdmin(admin.ModelAdmin):
     list_display = 'id', 'paid', 'owner', 'installment_date' 
-    ordering = 'id',
+    ordering = 'installment_date',
     list_display_links = 'id',
     search_fields = 'installment_date',
     list_filter = 'installment_date',

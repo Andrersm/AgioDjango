@@ -75,7 +75,7 @@ def search(request):
 def parcelas_filter(request,):
     
     user = request.user
-    single_installments = Parcelas.objects.filter(owner_user=user).order_by('owner')
+    single_installments = Parcelas.objects.filter(owner_user=user).order_by('installment_date')
     filter = ParcelasFilter(request.GET, queryset=single_installments)
 
     paginator = Paginator(single_installments, 5)

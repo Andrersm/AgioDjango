@@ -30,7 +30,7 @@
       {% if user == contact.owner %}
     <div class="contact-links">
       <a class="btn btn-link" href="{% url 'contact:update' contact.id %}">Update</a>
-      <a class="btn btn-link" href="{% url 'contact:create_loan' %}">Criar emprestimo</a>
+      <a class="btn btn-link" href="{% url 'contact:create_loan'  %}">Criar emprestimo</a>
 
       <form action="{% url 'contact:delete' contact.id %}" method="POST">
         {% csrf_token %}

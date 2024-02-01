@@ -24,8 +24,8 @@ urlpatterns = [
     
     path('loan/make/', views.loancreate, name='create_loan'),
     path('loan/<int:loan_id>/detail/', views.loan, name='loan'),
-    path('loan/<int:loan_id>/update/', views.update, name='update_loan'),
-    path('loan/<int:loan_id>/delete/', views.delete, name='delete_loan'),
+    path('loan/<int:loan_id>/update/', views.loan_update, name='loan_update'),
+    path('loan/<int:loan_id>/delete/', views.loan_delete, name='loan_delete'),
 
     path('parcelas/', views.parcelas_filter, name='parcelas'),
     path('parcelas/<int:parcela_id>/delete/', views.delete_parcela, name='delete_parcela'),

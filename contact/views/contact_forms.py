@@ -123,7 +123,7 @@ def loancreate(request,):
             
             
             messages.success(request, 'Empréstimo criado com sucesso!')
-            return redirect('contact:index')
+            return redirect('contact:loan', loan_id=loan.id)
     else:
         form = LoanForm(user=request.user) 
 
@@ -134,17 +134,33 @@ def loancreate(request,):
 
     return render(request, 'contact/create_loan.html', context)
 
+
 def loan_update(request, loan_id):
-    loan = get_object_or_404(Loan, pk=loan_id, show=True)
+    loan = get_object_or_404(Loan, pk=loan_id, )
     form_action = reverse('contact:loan_update', args=(loan_id,))
 
     if request.method == 'POST':
         form = LoanForm(request.user, request.POST, request.FILES, instance=loan)
+        form_installments = Parcelas.objects.filter(owner=loan_id).all()
+        form_installments.delete()
         if form.is_valid():
             loan = form.save(commit=False)
+            loan.total_amount_ = (loan.fees / 100) * loan.total_amount 
+            loan.total_amount = loan.total_amount_ + loan.total_amount
             loan.save()
+            days = loan.days
+            for i in range(loan.total_installments):
+                parcelas = Parcelas()
+                parcelas.installment_date = loan.loan_date + timedelta(days=days)
+                parcelas.amount = loan.total_installments
+                parcelas.amount_per_installment = loan.total_amount / loan.total_installments
+                parcelas.owner = loan
+                days += loan.days
+                parcelas.owner_user = request.user
+                parcelas.save()
+                i += 1
             messages.success(request, 'Empréstimo atualizado com sucesso!')
-            return redirect('contact:index')
+            return redirect('contact:loan', loan_id=loan.id)
     else:
         form = LoanForm(user=request.user, instance=loan)
 
@@ -165,4 +181,14 @@ def loan(request, loan_id):
         'installments': single_installments,
         }
     return render(request, 'contact/loan.html', context)
+
+
+def loan_delete(request, loan_id):
+    loan = get_object_or_404(Loan, pk=loan_id)
+    parcelas = Parcelas.objects.filter(owner=loan)
+    parcelas.delete()
+    loan.delete()
+    
+    messages.success(request, 'Emprestimo apagado com sucesso!')
+    return redirect('contact:index')
 

@@ -7,8 +7,6 @@ from django.contrib.auth import password_validation
 from contact.models import Contact
 
 
-
-
 class ContactForm(forms.ModelForm):
     picture = forms.ImageField(
         widget=forms.FileInput(
@@ -192,6 +190,43 @@ class RegisterUpdateForm(forms.ModelForm):
     
 
 class LoanForm(forms.ModelForm):
+
+    total_amount = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        required=True,
+        min_value=1,
+        label='Valor do emprestimo',
+        widget=forms.NumberInput(
+            attrs={'class':'form-control'}
+        )
+    )
+    total_installments = forms.IntegerField(
+        required=True,
+        min_value=1,
+        label='Total de parcelas',
+        widget=forms.NumberInput(
+            attrs={'class':'form-control'}
+        )
+    )
+    owner = forms.ModelChoiceField(
+        queryset=Contact.objects.all(),
+        required=True,
+        label='Dono do emprestimo',
+        help_text='Obrigatorio',
+        widget=forms.Select(
+            attrs={'class':'form-control'}
+        )
+    )
+    def __init__(self, user, *args, **kwargs):
+        super(LoanForm, self).__init__(*args, **kwargs)
+        self.fields['owner'].queryset = models.Contact.objects.filter(owner=user)
+    class Meta:
+        model = models.Loan
+        fields = ('total_amount', 'total_installments', 'owner', 'fees', 'days', 'loan_date')
+        widgets = {'owner': forms.Select(attrs={'class':'form-control'})}
+
+
+class UpdateLoanForm(forms.ModelForm):
 
     total_amount = forms.DecimalField(
         max_digits=10, decimal_places=2,

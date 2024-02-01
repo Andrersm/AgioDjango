@@ -10,19 +10,38 @@
     <p><b>Data de criação:</b> {{ loan.loan_date }}</p>
 
     <p><b>-----------------------------------------------</b></p>
-    {% for parcela in installments %}
-    <p><b>Valor:</b> {{ parcela.amount_per_installment }}</p>
-    <p><b>Data da parcela:</b> {{ parcela.installment_date }}</p>
-    {% if parcela.paid  %}
-      <p><b>Pagamento:</b>Pago</p>
-    {% else %}
-      <p><b>Pagamento:</b> Pendente</p> 
-    {% endif %}
-    <p><b>------------------</b></p>
-
-
-
+    {% for installment in installments %}
+      {% if installment.owner_user == user %}
+          <tr class="table-row">
+              <td class="table-cel">  
+                  {{installment.amount_per_installment}}
+              </td>
+              <td class="table-cel">  
+                  {{installment.installment_date}}
+              </td>
+              <td class="table-cel">
+                  <form action="{% url 'contact:delete_parcela' parcela_id=installment.id %}" method="post">
+                      {% csrf_token %}
+                      <button class="btn" type="submit">Pagar</button>
+                  </form>                                    
+              </td>
+          </tr>
+      {% endif %}
     {% endfor %}
+    <p><b>-----------------------------------------------</b></p>
+    <td class="table-cel">
+      <form action="{% url 'contact:loan_delete' loan_id=loan.id %}" method="post">
+          {% csrf_token %}
+          <button class="btn" type="submit">Apagar Emprestimo</button>
+      </form>                                    
+    </td>
+    <p><b>-----------------------------------------------</b></p>
+    <td class="table-cel">
+      <form action="{% url 'contact:loan_update' loan_id=loan.id %}" method="get">
+          {% csrf_token %}
+          <button class="btn" type="submit">atualizar Emprestimo</button>
+      </form>                                    
+    </td>
     </div>
   </div>
 {% endblock content %}

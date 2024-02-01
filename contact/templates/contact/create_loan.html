@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% if form.instance.pk %}
+<div class="form-wrapper">
+  <h2>Atualizar emprestimo</h2>
+{% else %}
   <div class="form-wrapper">
-    <h2>Empréstimo</h2>
-    
+    <h2>Criar emprestimo</h2>
+{% endif %}
     <form 
       action="{{ form_action }}"
       method="POST"
@@ -35,7 +38,7 @@
       {% endif %}--
       <div class="form-content">
         <div class="form-group">
-          <button class="btn" type="submit">Send</button>
+          <button class="btn" type="submit">Enviar</button>
         </div>
       </div>
     </form>

@@ -78,7 +78,7 @@ def parcelas_filter(request,):
     single_installments = Parcelas.objects.filter(owner_user=user).order_by('installment_date')
     filter = ParcelasFilter(request.GET, queryset=single_installments)
 
-    paginator = Paginator(single_installments, 10)
+    paginator = Paginator(filter.qs, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     total_value = 0  
@@ -96,8 +96,15 @@ def parcelas_filter(request,):
     }
     return render(request, 'contact/allparcelas.html', context,)  
 
+
 def delete_parcela(request, parcela_id):
-    parcela = get_object_or_404(Parcelas, pk=parcela_id,)
+    parcela = get_object_or_404(Parcelas, pk=parcela_id)
     parcela.delete()
-    messages.success(request, 'Parcela paga com sucesso!')
-    return redirect('contact:parcelas')  
+    messages.success(request, 'Parcela deletada com sucesso!')
+
+    # Obtém o URL de referência do cabeçalho HTTP 'Referer'
+    referer_url = request.META.get('HTTP_REFERER')
+
+    # Redireciona para o referer_url, se disponível, caso contrário, redireciona para um URL padrão
+    return HttpResponseRedirect(referer_url if referer_url else 'contact:index')
+  
